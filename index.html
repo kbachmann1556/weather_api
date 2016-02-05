@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prototype App</title>
+	<link rel="stylesheet" type="text/css" href="./style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function (){
+		$('#submitCity').click(function (){
+			var city = $('#city').val();
+			console.log(city);
+			
+			$.get('http://api.openweathermap.org/data/2.5/weather?q='+city+'&APPID=4e5fda4c27984bcfefcafd3cfbf973af', function (res){
+				var temp = Math.round(res.main.temp*(9/5)-459.67);
+				// console.log(temp);
+				$('#success').html(
+					"<h3>Weather for "+res.name+"</h3><p>Current Temperature:  "+temp+" &degF</p><p>Humidity:  "+res.main.humidity+"</p><p>"+res.weather[0].description+"</p>");
+				console.log(res);
+			});
+		});
+	});
+	</script>
+</head>
+<body style="background-color:#90CAF9;">
+	<div id = 'container' style="text-align:center">
+		<h1>Type in a city, find the temperature</h1>
+		<form>
+			<input style="padding-left:10px;" type = 'text' id = 'city' placeholder = 'City'>
+		</form>
+		<button style="background-color:#0D47A1;color:white;border:none;border-radius:10px;height:30px;width:150px;font-size:14px" id = 'submitCity'>Find Weather</button>
+		<div id = 'success'>	
+		</div>
+	</div>
+</body>
+</html>
